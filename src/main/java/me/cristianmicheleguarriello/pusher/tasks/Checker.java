@@ -2,6 +2,7 @@ package me.cristianmicheleguarriello.pusher.tasks;
 
 import me.cristianmicheleguarriello.pusher.Core;
 import me.cristianmicheleguarriello.pusher.database.Database;
+import me.cristianmicheleguarriello.pusher.update.Updater;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -59,6 +60,12 @@ public class Checker implements Runnable {
 
             case 1: {
                 Core.getLOGGER().log(Level.INFO, "PUSHER >> License is valid.");
+                try {
+                    Updater updater = new Updater(licenseKey, database);
+                    updater.checker();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
 
